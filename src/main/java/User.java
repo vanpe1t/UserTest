@@ -5,12 +5,25 @@ public class User {
 
     private String login;
 
+    private void checkEmail(String email) throws  IllegalStateException{
+        if  (!(email.contains("@") && email.contains("."))) {
+            throw new IllegalStateException();
+        }
+    }
+
+    private void checkEmailLogin() throws  IllegalStateException{
+        if  (this.email == this.login) {
+            throw new IllegalStateException();
+        }
+    }
+
     public User() {
         this.email = null;
         this.login = null;
     }
 
     public User(String email, String login) {
+        checkEmail(email);
         this.email = email;
         this.login = login;
     }
@@ -19,7 +32,8 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws IllegalStateException{
+        checkEmail(email);
         this.email = email;
     }
 

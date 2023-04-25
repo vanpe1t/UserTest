@@ -10,27 +10,30 @@ class UserTest {
     static String login = "user";
 
     @Test
-    void shouldCreateUserWithNoFields() {
+    void shouldCreateUserWithNoEmail() {
         User user = new User();
-        Assertions.assertTrue(user.getEmail() == null && user.getLogin() == null);
+        Assertions.assertNull(user.getEmail());
     }
 
     @Test
+    void shouldCreateUserWithNoLogin() {
+        User user = new User();
+        Assertions.assertNull(user.getLogin());
+    }
+    @Test
     void shouldCreateUserWithFields() {
         User user = new User(email, login);
-        Assertions.assertTrue(user.getEmail() == email && user.getLogin() == login);
+        Assertions.assertEquals(new User("user@user.ru", "user"), user);
     }
 
     @Test
     void shouldLoginEmailNotEqual() {
-        User user = new User(email, login);
-        Assertions.assertTrue(user.getEmail() != user.getLogin());
+        Assertions.assertThrows(IllegalStateException.class, ()-> new User("email", "email"));
     }
 
     @Test
     void shouldBeCorrectEmail() {
-        User user = new User(email, login);
-        Assertions.assertTrue(user.getEmail().contains("@") && user.getEmail().contains("."));
+        Assertions.assertThrows(IllegalStateException.class, ()-> new User("user@userru", login));
     }
 
 }
